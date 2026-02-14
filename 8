@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tracking
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    restart: always
+    ports:
+      - "6379:6379"
+
+  api:
+    build: ../apps/api
+    env_file: ../.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+
+  gps-server:
+    build: ../apps/gps-server
+    depends_on:
+      - postgres
+      - redis
+
+  realtime-server:
+    build: ../apps/realtime-server
+    ports:
+      - "4000:4000"
+    depends_on:
+      - redis

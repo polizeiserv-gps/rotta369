@@ -1,0 +1,15 @@
+{
+  "name": "vehicle-tracking-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w apps/api && npm run build -w apps/gps-server && npm run build -w apps/realtime-server",
+    "dev:api": "npm run dev -w apps/api",
+    "dev:gps": "npm run dev -w apps/gps-server",
+    "dev:realtime": "npm run dev -w apps/realtime-server",
+    "migrate": "npm run migrate -w packages/database"
+  }
+}
